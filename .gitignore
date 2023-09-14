@@ -1,0 +1,16 @@
+# IDE
+.idea
+
+# python
+venv
+
+# Terraform
+**/.terraform
+**/*.hcl
+**/*.tfplan
+**/*.tfstate
+**/*.tfstate.backup
+
+# Sensible data
+*.env
+sa.json
