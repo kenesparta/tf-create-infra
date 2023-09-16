@@ -1,6 +1,10 @@
 # 1. Creando la infraestructura necesaria 🚀
 
-## 1.1 AWS provider ☁️ 
+## 1.1. Prerequisitos
+- [Creación de cuenta de AWS e instalación de AWS Cli](guia-instalacion-aws.md)
+- [Creación de cuenta de Google Cloud e instalación de  Google Cloud Cli](guia-instalacion-gcp.md)
+- [Creación de cuenta de Terraform e instalación de  Terraform Cli](guia-instalacion-terraform.md)
+## 1.2 AWS provider ☁️ 
 - Necesitas tener instalado el AWS CLI.
 - Una vez instalado, copiar las credenciales que se les van a proporcionar en los archivos:
   - ~/.aws/config
