@@ -68,7 +68,7 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 
 > 💡 **Nota:** Usa el comando `vim .env` o `nano .env` para editar el fichero `.env`.
 
-### 🧪 Creación y ejecución
+### 🧪 Creación y despliegue
 
 - Estando en el directorio del repositorio **tf-create-infra**, ingresar a la carpeta `aws` con `cd ./aws` y ejecutar
   este comando `make dev`.
@@ -152,6 +152,19 @@ Este paso no es necesario porque ya se configuraron las variables de ambiente.
     --member=allUsers \
     --role=roles/run.invoker \
     --project dockerayacucho
+```
+
+- Se puede ingresar a la dirección mostrada en el
+  terminal: https://fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
+
+```shell
+✓ Deploying new service... Done.
+✓ Creating Revision...
+✓ Routing traffic...
+✓ Setting IAM Policy...
+Done.
+Service [fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c6282f345a9] revision [fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c6282f3-00001-52f] has been deployed and is serving 100 percent of traffic.
+Service URL: https://fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
 ```
 
 ### 🧨 Destrucción
