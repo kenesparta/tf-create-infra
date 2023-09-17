@@ -66,7 +66,7 @@ Es necesario instalarlos antes de comenzar con el proyecto:
       export VERSION=0.0.1
       ```
 
-> 💡 **Nota:** Usa el comando "vim .env" o "nano .env" para editar el fichero .env
+> 💡 **Nota:** Usa el comando `vim .env` o `nano .env` para editar el fichero `.env`.
 
 ### 🧪 Creación y ejecución
 
