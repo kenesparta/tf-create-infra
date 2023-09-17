@@ -1,6 +1,8 @@
 #!/bin/bash
 source ../.env
 
+CLUSTER_NAME="cluster_${ID}"
+
 TASK_ARN=$(aws ecs list-tasks --cluster "${CLUSTER_NAME}" \
                --profile "${AWS_PROFILE}" --query 'taskArns[0]' --output text)
 echo "TASK: ${TASK_ARN}"

@@ -5,10 +5,10 @@ dev/init:
 
 dev/plan:
 	source ../.env && \
-	terraform plan -parallelism=15 -out aws.cluster.tfplan
+	terraform plan -parallelism=15 -out gcp.tfplan
 
 dev/apply:
-	source ../.env && terraform apply "aws.cluster.tfplan"
+	source ../.env && terraform apply "gcp.tfplan"
 
 dev: dev/init dev/plan dev/apply
 
