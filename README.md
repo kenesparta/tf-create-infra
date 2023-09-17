@@ -1,27 +1,30 @@
-# Creando la infraestructura necesaria 🚀
+# 🚀 Creando la infraestructura necesaria
 
 ## Requerimientos:
 
-| Herramienta | Instalación                                                                                  |
-|-------------|----------------------------------------------------------------------------------------------|
-| Git         | [↗️ git-scm](https://git-scm.com/downloads)                                                  |
-| AWS CLI     | [↗️ amazon](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)   |
-| GCP CLI     | [↗️ google](https://cloud.google.com/sdk/docs/install)                                       |
-| Terraform   | [↗️ hashicorp](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform) |
+Es necesario instalarlos antes de comenzar con el proyecto:
+
+| Herramienta | Instalación                                                                                               |
+|-------------|-----------------------------------------------------------------------------------------------------------|
+| Git         | [↗️ git-scm](https://git-scm.com/downloads)                                                               |
+| AWS CLI     | [↗️ amazon](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)                |
+| GCP CLI     | [↗️ google](https://cloud.google.com/sdk/docs/install)                                                    |
+| Terraform   | [↗️ hashicorp](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)              |
+| Make        | Se puede instalar usando los gestores de paquetes de distros basadas en UNIX como apt, yum, pacman, brew. |
 
 ## ☁️ Proveedor: AWS
 
 ### 🔐 Configurando credenciales:
 
-- Una vez instalado, copiar las credenciales que se les van a proporcionar en los archivos, si es que esos archivos
-  ya tiene algún contenido, agrégalos al final de los mismos:
+- Copiar las credenciales que se les van a proporcionar en siguientes los archivos, si es que esos
+  archivos ya tiene algún contenido, agrégalos al final de los mismos:
     - Archivo `~/.aws/config`:
       ```sh
       [profile ecs]
       region = us-east-1
       output = json
       ```
-    - Estas credenciales se les proveerá al momento del evento, archivo: `~/.aws/credentials`:
+    - Estas credenciales se les proveerá al momento del evento, Archivo `~/.aws/credentials`:
       ```sh
       [ecs]
       aws_access_key_id = AKI****
