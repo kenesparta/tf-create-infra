@@ -12,6 +12,8 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 | Terraform   | [↗️ hashicorp](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)         |
 | Make        | Se puede instalar usando los gestores de paquetes de SO basados en UNIX como apt, yum, pacman, brew. |
 
+---
+
 ## ☁️ Proveedor: AWS
 
 ### 🔐 Configurando credenciales:
@@ -37,7 +39,7 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 - Luego, crear el archivo `.env`, puede usar el comando: `touch .env` para crearlo.
 - En seguida, muestro que es lo que se va a poner dentro del archivo `.env`:
     - `ID`: es un uuid que se puede generar de [este enlace 🔗](https://www.uuidgenerator.net/)
-      este código tiene que ser diferente entre cada participante, es el codigo que indentificara todo el deployment.
+      este código tiene que ser diferente entre cada participante, es el código que identificará todo el deployment.
     - `DOCKER_IMAGE`: es el nombre de la imagen que se encuentra en el docker hub, tiene que ser pública.
     - `CONTAINER_NAME`: es el nombre del contenedor el cual será desplegado en AWS Fargate.
     - `CONTAINER_PORT`: es la puerta donde se va a exponer el servicio, pueden ser usadas solamente las puertas: 8080,
@@ -74,5 +76,7 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 ### 🚨 Destrucción
 
 Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy`
+
+---
 
 ## ☁️ Proveedor: GCP 
