@@ -4,13 +4,13 @@
 
 Es necesario instalarlos antes de comenzar con el proyecto:
 
-| Herramienta | Instalación                                                                                          |
-|-------------|------------------------------------------------------------------------------------------------------|
-| Git         | [↗️ git-scm](https://git-scm.com/downloads)                                                          |
-| AWS CLI     | [↗️ amazon](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)           |
-| GCP CLI     | [↗️ google](https://cloud.google.com/sdk/docs/install)                                               |
-| Terraform   | [↗️ hashicorp](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)         |
-| Make        | Se puede instalar usando los gestores de paquetes de SO basados en UNIX como apt, yum, pacman, brew. |
+| Herramienta | Enlaces                                                                                              | Guias                                                |
+|-------------|------------------------------------------------------------------------------------------------------|------------------------------------------------------|
+| Git         | [↗️ git-scm](https://git-scm.com/downloads)                                                          |                                                      |
+| AWS CLI     | [↗️ amazon](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)           | [📝](guia-instalacion/guia-instalacion-aws.md)       |
+| GCP CLI     | [↗️ google](https://cloud.google.com/sdk/docs/install)                                               | [📝](guia-instalacion/guia-instalacion-gcp.md)       |
+| Terraform   | [↗️ hashicorp](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform)         | [📝](guia-instalacion/guia-instalacion-terraform.md) |
+| Make        | Se puede instalar usando los gestores de paquetes de SO basados en UNIX como apt, yum, pacman, brew. |                                                      |
 
 ---
 
