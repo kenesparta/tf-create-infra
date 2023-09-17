@@ -1,17 +1,17 @@
 locals {
   common_name    = "docker-event"
-  cluster_name   = data.external.env_vars.result["CLUSTER_NAME"]
+  id             = data.external.env_vars.result["ID"]
   docker_image   = data.external.env_vars.result["DOCKER_IMAGE"]
   container_name = data.external.env_vars.result["CONTAINER_NAME"]
   container_port = data.external.env_vars.result["CONTAINER_PORT"]
 }
 
 resource "aws_ecs_cluster" "docker_event" {
-  name = local.cluster_name
+  name = format("cluster_%s", local.id)
 }
 
 resource "aws_ecs_task_definition" "docker_event" {
-  family                   = format("%s-task_%s", local.common_name, local.cluster_name)
+  family                   = format("%s-task_%s", local.common_name, local.id)
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "256"
@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "docker_event" {
 }
 
 resource "aws_ecs_service" "docker_event" {
-  name            = format("%s-service_%s", local.common_name, local.cluster_name)
+  name            = format("%s-service_%s", local.common_name, local.id)
   cluster         = aws_ecs_cluster.docker_event.id
   task_definition = aws_ecs_task_definition.docker_event.arn
   launch_type     = "FARGATE"
