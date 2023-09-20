@@ -37,6 +37,8 @@ Es necesario instalarlos antes de comenzar con el proyecto:
     └── recursos
 ```
 
+---
+
 ## 🌳 Preparación de las variables de ambiente
 
 - Una vez clonado este proyecto, ingresar al directorio `tf-create-infra`.
@@ -74,25 +76,33 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 
 > 💡 **Nota:** Usa el comando `vim .env` o `nano .env` para editar el fichero `.env`.
 
+---
+
 ## 🐳 Docker Hub
 
 - Una vez creada la cuenta, crear un repositorio y un token de acceso.
 - Ingresar al directorio `./workshop_docker_Ayacucho_001/`.
-- Ejecutar el comando `source ../tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
+- Ejecutar el comando `source ../tf-create-infra/.env`. Para cargar las variables de ambiente configuradas
+  anteriormente.
 - Ejecutar este comando para hacer el build en la máquina local.
 
 ```shell
 docker build -t "${DOCKER_IMAGE_NAME}":"${DOCKER_IMAGE_TAG}" .
 ```
+
 - Luego ejecutar el docker login y poner el token de acceso como password:
+
 ```shell
 docker login -u ${DOCKER_USER_NAME}
 ```
 
 - Finalmente, hacer el docker push:
+
 ```shell
 docker push "${DOCKER_IMAGE_NAME}":"${DOCKER_IMAGE_TAG}"
 ```
+
+---
 
 ## ☁️ Proveedor: AWS
 
@@ -151,7 +161,7 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
 
 #### 💽 Envío de la imagen al registry privado
 
-- Regresar al directorio del repositorio **tf-create-infra** y luego ejecutar el comando `source ./.env`. 
+- Regresar al directorio del repositorio **tf-create-infra** con `cd ..` y luego ejecutar el comando `source ./.env`.
   Para cargar las variables de ambiente configuradas anteriormente.
 - Se ejecutan los siguientes comandos para crear un repositorio privado en el Artifact Registry de Google:
   ```shell
@@ -159,9 +169,9 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
   
   gcloud auth configure-docker us-central1-docker.pkg.dev
   
-  docker tag "${DOCKER_IMAGE_NAME}":"${DOCKER_IMAGE_TAG}" us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+  docker tag "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" us-central1-docker.pkg.dev/dockerayacucho/"${CONTAINER_NAME}-${ID}"/"${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
   
-  docker push us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+  docker push us-central1-docker.pkg.dev/dockerayacucho/"${CONTAINER_NAME}-${ID}"/"${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
   ```
 
 ### 🚀 Despliegue
