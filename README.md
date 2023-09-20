@@ -14,6 +14,85 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 
 ---
 
+## 🏗️ Workspace
+
+- Clonar este proyecto en el directorio `tf-create-infra`.
+- Recomendamos trabajar con esta aplicación nodeJS, por favor acceder
+  a [este link](https://github.com/GlisseLisbeth/workshop_docker_Ayacucho_001/tree/main/02-demo-app-nodejs-docker).
+- Finalmente, tendremos este ambiente de trabajo:
+
+```
+.
+├── tf-create-infra
+│  ├── README.md
+│  ├── aws
+│  ├── docker
+│  ├── gcp
+│  └── sa.json
+└── workshop_docker_Ayacucho_001
+    ├── 01-demo-nginx-docker
+    ├── 02-demo-app-nodejs-docker
+    ├── 03-demo-data-mysql
+    ├── README.md
+    └── recursos
+```
+
+## 🌳 Preparación de las variables de ambiente
+
+- Una vez clonado este proyecto, ingresar al directorio `tf-create-infra`.
+- Luego, crear el archivo `.env`, puede usar el comando: `touch .env` para crearlo.
+- En seguida, muestro que es lo que se va a poner dentro del archivo `.env`:
+
+    - `ID`: es un uuid que se tiene que generar desde [este enlace 🔗](https://www.uuidgenerator.net/)
+      ⚠️ **ATENCIÓN: este código tiene que ser diferente entre cada participante**, es el código que identificará todo
+      el deployment.
+    - `DOCKER_IMAGE_NAME`: es el nombre de la imagen que se encuentra en el docker hub, para AWS tiene que ser una
+      imagen pública.
+    - `DOCKER_IMAGE_TAG`: es la version de la imagen que se encuentra en el docker hub.
+    - `CONTAINER_NAME`: es el nombre del contenedor el cual será desplegado en AWS Fargate.
+    - `CONTAINER_PORT`: es la puerta donde se va a exponer el servicio, pueden ser usadas solamente las puertas: 8080,
+      8088, 3000 y 80.
+      ```sh
+      # Se sugiere no cambiar estas variables
+      export AWS_PROFILE=ecs
+      export AWS_REGION=us-east-1
+      
+      export GOOGLE_PROJECT=dockerayacucho
+      export GOOGLE_CREDENTIALS=./sa.json
+      export GOOGLE_ZONE=us-central1
+      
+      # Estas variables e pueden cambiar a conveniencia
+      # Este ID tiene que ser cambiado:
+      export ID=f49951cf-96e9-4095-a768-2c6282f345a9
+      export DOCKER_USER_NAME=kenesparta
+      export DOCKER_IMAGE_NAME=kenesparta/fibonacci-wasm-front
+      export DOCKER_IMAGE_TAG=0.0.2
+      export CONTAINER_NAME=fibonacci-wasm
+      export CONTAINER_PORT=3000
+      ```
+
+> 💡 **Nota:** Usa el comando `vim .env` o `nano .env` para editar el fichero `.env`.
+
+## 🐳 DockerHub
+
+- Una vez creada la cuenta, crear un repositorio y un token de acceso.
+- Ingresar al directorio `./workshop_docker_Ayacucho_001/`.
+- Ejecutar el comando `source ../tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
+- Ejecutar este comando para hacer el build en la máquina local.
+
+```shell
+docker build -t "${DOCKER_IMAGE_NAME}":"${DOCKER_IMAGE_TAG}" .
+```
+- Luego ejecutar el docker login y poner el token de acceso como password:
+```shell
+docker login -u ${DOCKER_USER_NAME}
+```
+
+- Finalmente, hacer el docker push:
+```shell
+docker push "${DOCKER_IMAGE_NAME}":"${DOCKER_IMAGE_TAG}"
+```
+
 ## ☁️ Proveedor: AWS
 
 ### 🔐 Configurando credenciales
@@ -32,43 +111,7 @@ Es necesario instalarlos antes de comenzar con el proyecto:
    aws_secret_access_key = Bvr****
   ```
 
-### 🌳 Preparación de las variables de ambiente
-
-- Una vez clonado este proyecto, ingresar al directorio `tf-create-infra`.
-- Luego, crear el archivo `.env`, puede usar el comando: `touch .env` para crearlo.
-- En seguida, muestro que es lo que se va a poner dentro del archivo `.env`:
-
-    - `ID`: es un uuid que se tiene que generar desde [este enlace 🔗](https://www.uuidgenerator.net/)
-      ⚠️ **ATENCIÓN: este código tiene que ser diferente entre cada participante**, es el código que identificará todo
-      el deployment.
-    - `DOCKER_IMAGE`: es el nombre de la imagen que se encuentra en el docker hub, tiene que ser pública.
-    - `CONTAINER_NAME`: es el nombre del contenedor el cual será desplegado en AWS Fargate.
-    - `CONTAINER_PORT`: es la puerta donde se va a exponer el servicio, pueden ser usadas solamente las puertas: 8080,
-      8088, 443 y 80.
-      ```sh
-      # se sugiere no cambiar estas variables
-      export AWS_PROFILE=ecs
-      export AWS_REGION=us-east-1
-      
-      export GOOGLE_PROJECT=dockerayacucho
-      export GOOGLE_CREDENTIALS=./sa.json
-      export GOOGLE_ZONE=us-central1
-      
-      # Estas variables e pueden cambiar a conveniencia
-      # Este ID tiene que ser cambiado:
-      export ID=f49951cf-96e9-4095-a768-2c6282f345a9
-      export DOCKER_IMAGE=kenesparta/fibonacci-wasm-front:0.0.2
-      export CONTAINER_NAME=fibonacci-wasm
-      export CONTAINER_PORT=8080
-      
-      # Variables para local
-      export DOCKER_IMAGE_LOCAL=kenesparta/fibonacci-wasm-front
-      export VERSION=0.0.1
-      ```
-
-> 💡 **Nota:** Usa el comando `vim .env` o `nano .env` para editar el fichero `.env`.
-
-### 🧪 Creación y despliegue
+### 🚀 Creación y despliegue
 
 - Estando en el directorio del repositorio **tf-create-infra**, ingresar a la carpeta `aws` con `cd ./aws` y ejecutar
   este comando `make dev`.
@@ -77,9 +120,10 @@ Es necesario instalarlos antes de comenzar con el proyecto:
   ```shell
     TASK: arn:aws:ecs:us-east-1:603374375148:task/cluster_f49951cf-96e9-4095-a768-2c6282f345a9/4e5efc75630d42da85f1dc7759b6bf54
     ENI: eni-0a279628702d865f7
-    IP: 52.87.184.143
+    IP: http://52.87.184.143:3000/
   ```
-- Acceder a esta dirección: http://52.87.184.143:8080/ (la IP deberá ser de la salida del comando anterior).
+- Acceder a esta dirección: http://52.87.184.143:3000/ ⚠️ **La IP/Puerta deberá ser de la salida del comando anterior,
+  esta es solamente un ejemplo**.
 
 ### 🧨 Destrucción
 
@@ -97,32 +141,29 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
 - El archivo `sa.json` contiene las credenciales necesarias que permiten autenticarse y asi poder ejecutar comandos en
   el google cloud CLI.
 
-### 🌳 Preparación de las variables de ambiente
-
-Este paso no es necesario porque ya se configuraron las variables de ambiente.
-
 ### 🧪 Creación
 
+#### 👩‍🍳 Preparación
+
 - Estando en el directorio del repositorio **tf-create-infra**, ingresar a la carpeta `gcp` con `cd ./gcp` y ejecutar
-  este comando `make dev`.
+  este comando `make dev`. Esto creará el registry privado en GCP.
 - Una vez creado el registry, se procede a hacer push de la imagen local al registry privado de GCP, para ello debemos
-  clonar el [siguiente repositorio 🦀](https://github.com/kenesparta/fibonacci-wasm)
-  **fuera del directorio del proyecto.** (`cd ../../.`).
-- Una vez clonado el proyecto, entrar a la carpeta del mismo: `cd ./fibonacci-wasm`.
-- Copiar el archivo `sa.json` (credenciales) dentro de la carpeta del proyecto `./fibonacci-wasm`.
-- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente.
-- Ejecutar este comando para hacer el build en la máquina local, recuerde que puede cambiar el
-  nombre `${DOCKER_IMAGE_LOCAL}` por el que puso en la variable `DOCKER_IMAGE_LOCAL` dentro del archivo `.env`.
+  salir del directorio  **tf-create-infra** con el comando: `cd ../../.`.
+- En seguida, entrar a la carpeta de la demo: `cd ./workshop_docker_Ayacucho_001/02-demo-app-nodejs-docker`.
+- Copiar el archivo `sa.json` (credenciales) dentro de la carpeta del proyecto que has clonado.
+- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
+- Ejecutar este comando para hacer el build en la máquina local.
   ```shell
   docker build \
-    -t "${DOCKER_IMAGE_LOCAL}":"${VERSION}" \
+    -t "${DOCKER_IMAGE_NAME}":"${VERSION}" \
     -f DockerfileFrontend .
   ```
 
+#### 💽 Envío de la imagen al registry privado
+
+- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
 - Una vez haya terminado la creación de la imagen de docker en local, se ejecutan los siguientes comandos para crear un
-  repositorio privado en el Artifact Registry de Google (asegúrese que la variable `"${ID}"` sea el ID que ha colocado
-  en
-  el archivo `.env`)
+  repositorio privado en el Artifact Registry de Google:
   ```shell
   gcloud auth activate-service-account --key-file=sa.json
   
@@ -135,6 +176,7 @@ Este paso no es necesario porque ya se configuraron las variables de ambiente.
 
 ### 🚀 Despliegue
 
+- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
 - Para hacer el despliegue se requiere ejecutar los siguientes comandos:
 
 ```shell

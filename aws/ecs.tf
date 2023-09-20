@@ -1,9 +1,10 @@
 locals {
-  common_name    = "docker-event"
-  id             = data.external.env_vars.result["ID"]
-  docker_image   = data.external.env_vars.result["DOCKER_IMAGE"]
-  container_name = data.external.env_vars.result["CONTAINER_NAME"]
-  container_port = data.external.env_vars.result["CONTAINER_PORT"]
+  common_name       = "docker-event"
+  id                = data.external.env_vars.result["ID"]
+  docker_image_name = data.external.env_vars.result["DOCKER_IMAGE_NAME"]
+  docker_image_tag  = data.external.env_vars.result["DOCKER_IMAGE_TAG"]
+  container_name    = data.external.env_vars.result["CONTAINER_NAME"]
+  container_port    = data.external.env_vars.result["CONTAINER_PORT"]
 }
 
 resource "aws_ecs_cluster" "docker_event" {
@@ -20,7 +21,7 @@ resource "aws_ecs_task_definition" "docker_event" {
   container_definitions    = jsonencode([
     {
       name         = local.container_name
-      image        = local.docker_image
+      image        = format("%s:%s", local.docker_image_name, local.docker_image_tag)
       portMappings = [
         {
           containerPort = tonumber(local.container_port)
