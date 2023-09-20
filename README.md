@@ -81,9 +81,8 @@ Es necesario instalarlos antes de comenzar con el proyecto:
 ## 🐳 Docker Hub
 
 - Una vez creada la cuenta, crear un repositorio y un token de acceso.
-- Ingresar al directorio `./workshop_docker_Ayacucho_001/`.
-- Ejecutar el comando `source ../tf-create-infra/.env`. Para cargar las variables de ambiente configuradas
-  anteriormente.
+- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas
+- Ingresar al directorio `./workshop_docker_Ayacucho_001/02-demo-app-nodejs-docker`.
 - Ejecutar este comando para hacer el build en la máquina local.
 
 ```shell
