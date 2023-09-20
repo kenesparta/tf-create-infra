@@ -8,5 +8,6 @@ if __name__ == "__main__":
         {
             "ID": os.getenv('ID'),
             "GOOGLE_ZONE": os.getenv('GOOGLE_ZONE'),
+            "CONTAINER_NAME": os.getenv('CONTAINER_NAME'),
         }
     ))

@@ -148,49 +148,38 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
 
 - Estando en el directorio del repositorio **tf-create-infra**, ingresar a la carpeta `gcp` con `cd ./gcp` y ejecutar
   este comando `make dev`. Esto creará el registry privado en GCP.
-- Una vez creado el registry, se procede a hacer push de la imagen local al registry privado de GCP, para ello debemos
-  salir del directorio  **tf-create-infra** con el comando: `cd ../../.`.
-- En seguida, entrar a la carpeta de la demo: `cd ./workshop_docker_Ayacucho_001/02-demo-app-nodejs-docker`.
-- Copiar el archivo `sa.json` (credenciales) dentro de la carpeta del proyecto que has clonado.
-- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
-- Ejecutar este comando para hacer el build en la máquina local.
-  ```shell
-  docker build \
-    -t "${DOCKER_IMAGE_NAME}":"${VERSION}" \
-    -f DockerfileFrontend .
-  ```
 
 #### 💽 Envío de la imagen al registry privado
 
-- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
-- Una vez haya terminado la creación de la imagen de docker en local, se ejecutan los siguientes comandos para crear un
-  repositorio privado en el Artifact Registry de Google:
+- Regresar al directorio del repositorio **tf-create-infra** y luego ejecutar el comando `source ./.env`. 
+  Para cargar las variables de ambiente configuradas anteriormente.
+- Se ejecutan los siguientes comandos para crear un repositorio privado en el Artifact Registry de Google:
   ```shell
   gcloud auth activate-service-account --key-file=sa.json
   
   gcloud auth configure-docker us-central1-docker.pkg.dev
   
-  docker tag "${DOCKER_IMAGE_LOCAL}":"${VERSION}" us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}"/fibonacci-wasm-front:${VERSION}
+  docker tag "${DOCKER_IMAGE_NAME}":"${DOCKER_IMAGE_TAG}" us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
   
-  docker push us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}"/fibonacci-wasm-front:"${VERSION}"
+  docker push us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}/${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
   ```
 
 ### 🚀 Despliegue
 
-- Ejecutar el comando `source ./tf-create-infra/.env`. Para cargar las variables de ambiente configuradas anteriormente.
+- Ejecutar el comando `source ./.env`. Para cargar las variables de ambiente configuradas anteriormente.
 - Para hacer el despliegue se requiere ejecutar los siguientes comandos:
 
 ```shell
   gcloud auth activate-service-account --key-file=sa.json
   
-  gcloud run deploy fibonacci-wasm-front-"${ID}" \
-    --image us-central1-docker.pkg.dev/dockerayacucho/fibo-wasm-"${ID}"/fibonacci-wasm-front:"${VERSION}" \
+  gcloud run deploy "${CONTAINER_NAME}-${ID}" \
+    --image us-central1-docker.pkg.dev/dockerayacucho/"${CONTAINER_NAME}-${ID}"/"${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" \
     --region us-central1 \
     --project dockerayacucho \
     --allow-unauthenticated \
     --platform managed
   
-  gcloud run services add-iam-policy-binding fibonacci-wasm-front-"${ID}" \
+  gcloud run services add-iam-policy-binding "${CONTAINER_NAME}-${ID}" \
     --region=us-central1 \
     --member=allUsers \
     --role=roles/run.invoker \
@@ -198,7 +187,7 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
 ```
 
 - Se puede ingresar a la dirección mostrada en el
-  terminal: https://fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
+  terminal: https://cont-name-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
 
 ```shell
 ✓ Deploying new service... Done.
@@ -206,8 +195,8 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
 ✓ Routing traffic...
 ✓ Setting IAM Policy...
 Done.
-Service [fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c6282f345a9] revision [fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c6282f3-00001-52f] has been deployed and is serving 100 percent of traffic.
-Service URL: https://fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
+Service [cont-name-f49951cf-96e9-4095-a768-2c6282f345a9] revision [cont-name-f49951cf-96e9-4095-a768-2c6282f3-00001-52f] has been deployed and is serving 100 percent of traffic.
+Service URL: https://cont-name-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
 ```
 
 ### 🧨 Destrucción
@@ -216,7 +205,7 @@ Service URL: https://fibonacci-wasm-front-f49951cf-96e9-4095-a768-2c62-2lj6ihili
   cualquier directorio):
 
 ```shell
-gcloud run services delete fibonacci-wasm-front-$(id) \
+gcloud run services delete "${CONTAINER_NAME}-${ID}" \
   --region=us-central1 \
   --project dockerayacucho
 ```
