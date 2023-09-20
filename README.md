@@ -46,6 +46,7 @@ Es necesario instalarlos antes de comenzar con el proyecto:
     - `ID`: es un uuid que se tiene que generar desde [este enlace 🔗](https://www.uuidgenerator.net/)
       ⚠️ **ATENCIÓN: este código tiene que ser diferente entre cada participante**, es el código que identificará todo
       el deployment.
+    - `DOCKER_USER_NAME`: nombre de usuario para hacer Login de docker.
     - `DOCKER_IMAGE_NAME`: es el nombre de la imagen que se encuentra en el docker hub, para AWS tiene que ser una
       imagen pública.
     - `DOCKER_IMAGE_TAG`: es la version de la imagen que se encuentra en el docker hub.
@@ -58,22 +59,22 @@ Es necesario instalarlos antes de comenzar con el proyecto:
       export AWS_REGION=us-east-1
       
       export GOOGLE_PROJECT=dockerayacucho
-      export GOOGLE_CREDENTIALS=./sa.json
+      export GOOGLE_CREDENTIALS=../sa.json
       export GOOGLE_ZONE=us-central1
       
       # Estas variables e pueden cambiar a conveniencia
       # Este ID tiene que ser cambiado:
-      export ID=f49951cf-96e9-4095-a768-2c6282f345a9
+      export ID=000000-00000-0000-0000-000000000
       export DOCKER_USER_NAME=kenesparta
-      export DOCKER_IMAGE_NAME=kenesparta/fibonacci-wasm-front
-      export DOCKER_IMAGE_TAG=0.0.2
-      export CONTAINER_NAME=fibonacci-wasm
+      export DOCKER_IMAGE_NAME=kenesparta/nodejs-ip
+      export DOCKER_IMAGE_TAG=0.0.1
+      export CONTAINER_NAME=nodejs-ip
       export CONTAINER_PORT=3000
       ```
 
 > 💡 **Nota:** Usa el comando `vim .env` o `nano .env` para editar el fichero `.env`.
 
-## 🐳 DockerHub
+## 🐳 Docker Hub
 
 - Una vez creada la cuenta, crear un repositorio y un token de acceso.
 - Ingresar al directorio `./workshop_docker_Ayacucho_001/`.
