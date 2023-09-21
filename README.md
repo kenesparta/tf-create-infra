@@ -165,11 +165,14 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
 - Se ejecutan los siguientes comandos para crear un repositorio privado en el Artifact Registry de Google:
   ```shell
   gcloud auth activate-service-account --key-file=sa.json
-  
+  ````
+  ````shell
   gcloud auth configure-docker us-central1-docker.pkg.dev
-  
+  ````
+  ````shell
   docker tag "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" us-central1-docker.pkg.dev/dockerayacucho/"${CONTAINER_NAME}-${ID}"/"${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-  
+  ````
+  ```shell
   docker push us-central1-docker.pkg.dev/dockerayacucho/"${CONTAINER_NAME}-${ID}"/"${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
   ```
 
@@ -187,7 +190,24 @@ Para destruir toda la infraestructura, ejecutar el comando `make dev/destroy` de
     --project dockerayacucho \
     --allow-unauthenticated \
     --platform managed
-  
+```
+
+- Se puede ingresar a la dirección mostrada en el
+  terminal: https://cont-name-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
+
+```shell
+✓ Deploying new service... Done.
+✓ Creating Revision...
+✓ Routing traffic...
+✓ Setting IAM Policy...
+Done.
+Service [cont-name-f49951cf-96e9-4095-a768-2c6282f345a9] revision [cont-name-f49951cf-96e9-4095-a768-2c6282f3-00001-52f] has been deployed and is serving 100 percent of traffic.
+Service URL: https://cont-name-f49951cf-96e9-4095-a768-2c62-2lj6ihiliq-uc.a.run.app
+```
+
+- (Opcional) Si es que no ve el resultado en la URL ejecutar este comando
+
+```shell
   gcloud run services add-iam-policy-binding "${CONTAINER_NAME}-${ID}" \
     --region=us-central1 \
     --member=allUsers \
