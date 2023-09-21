@@ -1,3 +1,3 @@
 data "external" "env_vars" {
-  program = ["./read_env.py"]
+  program = ["python", "./read_env.py"]
 }
